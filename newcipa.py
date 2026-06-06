@@ -44,7 +44,7 @@ fig = px.scatter(df, x=x_column, y=y_column, color='Gender', color_discrete_sequ
 st.plotly_chart(fig)
 
 # 1️⃣ Plot 1: Workout Duration vs Calories Burned Analysis
-st.subheader("🔥 1. Workout Duration vs. Calories Burned")
+st.subheader("Workout Duration vs. Calories Burned")
 st.markdown("Analyze whether longer exercise sessions result in a higher calorie expenditure.")
 
 # Interactive option to see how different factors influence this relationship
@@ -60,7 +60,7 @@ fig_duration = px.scatter(
     y='Calories_Burned', 
     color=color_option,
     hover_data=['Age', 'BMI'],
-    title="Relationship Between Workout Duration and Calories Burned 💸",
+    title="Relationship Between Workout Duration and Calories Burned ",
     labels={'Session_Duration (hours)': 'Workout Duration (Hours)', 'Calories_Burned': 'Calories Burned (kcal)'},
     opacity=0.8
 )
@@ -68,7 +68,7 @@ st.plotly_chart(fig_duration)
 
 
 # 2️⃣ Plot 2: Gender Fitness Characteristics Comparison
-st.subheader("🧬 2. Gender Fitness Characteristics Comparison")
+st.subheader("Gender Fitness Characteristics Comparison")
 st.markdown("Compare key exercise and fitness features across different genders.")
 
 # Restricting options to the variables you specified
@@ -83,7 +83,7 @@ fig_gender = px.scatter(
     y=y_fitness,
     color='Gender',
     symbol='Gender', # Uses different shapes for Male and Female points
-    title=f"Comparing {x_fitness} vs {y_fitness} by Gender ⚧️",
+    title=f"Comparing {x_fitness} vs {y_fitness} by Gender ",
     hover_data=['Age', 'Workout_Type'],
     color_discrete_sequence=px.colors.qualitative.Set2,
     opacity=0.8
