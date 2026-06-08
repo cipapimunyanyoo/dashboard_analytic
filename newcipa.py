@@ -105,45 +105,42 @@ st.plotly_chart(fig_gender)
 
 
 # ==========================================
-# 📊 NEW SECTION: AVERAGE FITNESS CHARACTERISTICS BY GENDER
+# 📊 NEW: INTERACTIVE GROUPED BAR CHART 
 # ==========================================
+st.subheader("📊 Average Fitness Characteristics by Gender")
+st.markdown("This bar chart displays the aggregated average values grouped by gender.")
 
-st.subheader("Average Fitness Characteristics by Gender")
-st.markdown("This bar chart displays the mean values of Fat Percentage, Workout Frequency, and Water Intake grouped by Gender.")
+# 1. Calculate the mean values grouped by Gender
+df_avg = df.groupby('Gender')[['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)']].mean().reset_index()
 
-# 1. Select only the necessary columns and aggregate by the mean
-columns_to_avg = [
-    'Fat_Percentage', 
-    'Workout_Frequency (days/week)', 
-    'Water_Intake (liters)'
-]
-
-# Grouping by Gender and calculating the average
-df_grouped = df.groupby('Gender')[columns_to_avg].mean()
-
-# 2. Plotting using Matplotlib to match your exact layout style 🎨
-fig_bar, ax = plt.subplots(figsize=(10, 6))
-
-# df.plot(kind='bar') automatically groups the columns side-by-side!
-df_grouped.plot(
-    kind='bar', 
-    ax=ax, 
-    width=0.4,
-    color=['#1f77b4', '#ff7f0e', '#2ca02c'] # Matches the Blue, Orange, Green from your screenshot
+# 2. Add an interactive multi-select widget to filter specific features in real-time
+selected_metrics = st.multiselect(
+    "Select metrics to display:",
+    options=['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)'],
+    default=['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)']
 )
 
-# 3. Customizing labels and titles to match the screenshot
-ax.set_title("Average Fitness Characteristics by Gender", fontsize=14)
-ax.set_ylabel("Average Value", fontsize=12)
-ax.set_xlabel("Gender", fontsize=12)
-ax.set_xticklabels(df_grouped.index, rotation=0) # Keeps 'Female' and 'Male' horizontal
-ax.legend(title="Variables", bbox_to_anchor=(1, 1), loc='upper right')
-ax.grid(axis='y', linestyle='--', alpha=0.3) # Adds a clean subtle background grid
-
-# Adjust layout so everything fits perfectly
-plt.tight_layout()
-
-# 4. Display the chart in your Streamlit App! 🚀
-st.pyplot(fig_bar)
-
-
+if selected_metrics:
+    # 3. Create the interactive Grouped Bar Chart using Plotly Express
+    fig_bar = px.bar(
+        df_avg,
+        x='Gender',
+        y=selected_metrics,
+        barmode='group',
+        title="Average Fitness Characteristics by Gender",
+        labels={'value': 'Average Value', 'variable': 'Variables'},
+        color_discrete_sequence=px.colors.qualitative.Plotly  # Clean, distinct professional colors
+    )
+    
+    # Clean up layout adjustments to replicate your screenshot style
+    fig_bar.update_layout(
+        yaxis_title="Average Value",
+        xaxis_title="Gender",
+        legend_title="Variables",
+        hovermode="x unified"
+    )
+    
+    # 4. Render chart in Streamlit
+    st.plotly_chart(fig_bar, use_container_width=True)
+else:
+    st.warning("Please select at least one metric to display the chart! ⚠️")
