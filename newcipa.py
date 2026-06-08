@@ -18,7 +18,7 @@ st.subheader("Raw Data")
 st.write(df)
 
 # 📈 Histogram Section
-st.subheader("📊 Histogram Analysis")
+st.subheader("Histogram Analysis")
 # Added key="hist_col" to prevent duplicate widget errors!
 column = st.selectbox("Choose a column for the histogram", df.columns, key="hist_col")
 
@@ -33,7 +33,7 @@ fig.update_traces(marker={"color": "purple", "line":{"color": "black", "width":2
 st.plotly_chart(fig)
 
 # 🎯 General Scatter Chart Section
-st.subheader("📍 General Scatter Chart")
+st.subheader("General Scatter Chart")
 # Added unique keys to these selectboxes too!
 x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
 y_column = st.sheet_selectbox = st.selectbox("Choose y-axis column", df.columns, key="scatter_y")
