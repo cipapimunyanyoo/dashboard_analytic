@@ -27,10 +27,42 @@ st.pyplot(fig)
 
 
 
+# Bar Chart
+st.subheader("Bar Chart")
 
+category_column = st.selectbox(
+    "Choose categorical column",
+    df.select_dtypes(include='object').columns
 )
-fig.update_traces( marker = {"color": "purple", "line":{"color": "black", "width":2}})
+
+value_column = st.selectbox(
+    "Choose numerical column",
+    df.select_dtypes(include='number').columns
+)
+
+# Calculate mean values
+bar_data = df.groupby(category_column)[value_column].mean()
+
+# Matplotlib Bar Chart
+fig, ax = plt.subplots(figsize=(10, 6))
+bar_data.plot(kind='bar', ax=ax)
+
+ax.set_title(f'Average {value_column} by {category_column}')
+ax.set_ylabel(f'Average {value_column}')
+ax.set_xlabel(category_column)
+
+st.pyplot(fig)
+
+# Plotly Bar Chart
+fig = px.bar(
+    x=bar_data.index,
+    y=bar_data.values,
+    labels={'x': category_column, 'y': f'Average {value_column}'},
+    title=f'Average {value_column} by {category_column}'
+)
+
 st.plotly_chart(fig)
+
 
 
 
