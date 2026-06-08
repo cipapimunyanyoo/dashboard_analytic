@@ -5,8 +5,8 @@ import plotly.express as px
 
 st.date_input("Select a date")
 
-st.title("""Welcome to my Dashboard
-This is my first time using streamlit.""")
+st.title("""Welcome to Liyana's and Syifa's Dashboard
+This is ourfirst time using streamlit.""")
 
 st.image("gym.jpg", caption="Gym Dashboard Logo")
 
