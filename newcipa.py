@@ -104,18 +104,46 @@ st.plotly_chart(fig_gender)
 
 
 
+# ==========================================
+# 📊 NEW SECTION: AVERAGE FITNESS CHARACTERISTICS BY GENDER
+# ==========================================
 
-import streamlit as st
-import plotly.express as px  # <-- Much simpler than graph_objects!
+st.subheader("Average Fitness Characteristics by Gender")
+st.markdown("This bar chart displays the mean values of Fat Percentage, Workout Frequency, and Water Intake grouped by Gender.")
 
-# Creating the grouped bar chart in ONE line 🪄
-fig = px.bar(
-    df, 
-    x="Gender", 
-    y=["Workout_Frequency", "Water_Intake", "Fat_Percentage"], 
-    barmode="group",
-    title="Average Fitness Characteristics by Gender"
+# 1. Select only the necessary columns and aggregate by the mean
+columns_to_avg = [
+    'Fat_Percentage', 
+    'Workout_Frequency (days/week)', 
+    'Water_Intake (liters)'
+]
+
+# Grouping by Gender and calculating the average
+df_grouped = df.groupby('Gender')[columns_to_avg].mean()
+
+# 2. Plotting using Matplotlib to match your exact layout style 🎨
+fig_bar, ax = plt.subplots(figsize=(10, 6))
+
+# df.plot(kind='bar') automatically groups the columns side-by-side!
+df_grouped.plot(
+    kind='bar', 
+    ax=ax, 
+    width=0.4,
+    color=['#1f77b4', '#ff7f0e', '#2ca02c'] # Matches the Blue, Orange, Green from your screenshot
 )
 
-# Display it in your app
-st.plotly_chart(fig)
+# 3. Customizing labels and titles to match the screenshot
+ax.set_title("Average Fitness Characteristics by Gender", fontsize=14)
+ax.set_ylabel("Average Value", fontsize=12)
+ax.set_xlabel("Gender", fontsize=12)
+ax.set_xticklabels(df_grouped.index, rotation=0) # Keeps 'Female' and 'Male' horizontal
+ax.legend(title="Variables", bbox_to_anchor=(1, 1), loc='upper right')
+ax.grid(axis='y', linestyle='--', alpha=0.3) # Adds a clean subtle background grid
+
+# Adjust layout so everything fits perfectly
+plt.tight_layout()
+
+# 4. Display the chart in your Streamlit App! 🚀
+st.pyplot(fig_bar)
+
+
