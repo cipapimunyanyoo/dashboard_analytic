@@ -39,14 +39,6 @@ x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
 y_column = st.sheet_selectbox = st.selectbox("Choose y-axis column", df.columns, key="scatter_y")
 
 
-# Scatter Plot
-fig_scatter = px.scatter(
-    df,
-    x="Session_Duration (hours)",
-    y="Calories_Burned",
-    title="Session Duration vs Calories Burned"
-)
-st.plotly_chart(fig_scatter)
 
 # Matplotlib Scatter
 fig, ax = plt.subplots(figsize=(10,6))
