@@ -218,3 +218,21 @@ fig_gender = px.scatter(
     opacity=0.8
 )
 st.plotly_chart(fig_gender)
+
+# =========================
+# 2. Bar Chart
+# Session Duration vs Calories Burned
+# =========================
+st.subheader("2. Average Calories Burned by Session Duration")
+
+bar_data = df.groupby("Session_Duration (hours)")["Calories_Burned"].mean().reset_index()
+
+fig2 = px.bar(
+    bar_data,
+    x="Session_Duration (hours)",
+    y="Calories_Burned",
+    title="Average Calories Burned by Session Duration"
+)
+
+st.plotly_chart(fig2, use_container_width=True)
+
