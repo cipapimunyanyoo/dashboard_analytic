@@ -38,25 +38,42 @@ st.pyplot(fig)
 fig = px.scatter(df, x=x_column, y = y_column,color ='sex' , color_discrete_sequence= ['yellow', 'red'])
 st.plotly_chart(fig)
 
-#bar chart
-import pandas as pd
-import matplotlib.pyplot as plt
 
-# Create DataFrame
-df = pd.DataFrame(data)
 
-# Calculate means by gender
-gender_means = df.groupby('Gender')[
-    ['Fat Percentage',
-     'Workout Frequency (days/week)',
-     'Water Intake (liters)']
-].mean()
 
-# Plot
-gender_means.plot(kind='bar', figsize=(10,6))
+# Bar Chart
+st.subheader("Bar Chart")
 
-plt.title('Average Fitness Characteristics by Gender')
-plt.ylabel('Average Value')
-plt.xticks(rotation=0)
-plt.legend(title='Variables')
-plt.show()
+category_column = st.selectbox(
+    "Choose categorical column",
+    df.select_dtypes(include='object').columns
+)
+
+value_column = st.selectbox(
+    "Choose numerical column",
+    df.select_dtypes(include='number').columns
+)
+
+# Calculate mean values
+bar_data = df.groupby(category_column)[value_column].mean()
+
+# Matplotlib Bar Chart
+fig, ax = plt.subplots(figsize=(10, 6))
+bar_data.plot(kind='bar', ax=ax)
+
+ax.set_title(f'Average {value_column} by {category_column}')
+ax.set_ylabel(f'Average {value_column}')
+ax.set_xlabel(category_column)
+
+st.pyplot(fig)
+
+# Plotly Bar Chart
+fig = px.bar(
+    x=bar_data.index,
+    y=bar_data.values,
+    labels={'x': category_column, 'y': f'Average {value_column}'},
+    title=f'Average {value_column} by {category_column}'
+)
+
+st.plotly_chart(fig)
+
