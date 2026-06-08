@@ -105,5 +105,58 @@ st.plotly_chart(fig_gender)
 
 
 
+# ======================================
+# AVERAGE FITNESS CHARACTERISTICS BY GENDER
+# ======================================
 
+st.subheader("📊 Average Fitness Characteristics by Gender")
+
+# Calculate averages
+gender_avg = df.groupby("Gender")[[
+    "Fat_Percentage",
+    "Workout_Frequency (days/week)",
+    "Water_Intake (liters)"
+]].mean()
+
+# Create grouped bar chart
+fig = go.Figure()
+
+fig.add_trace(
+    go.Bar(
+        name='Fat Percentage',
+        x=gender_avg.index,
+        y=gender_avg['Fat_Percentage']
+    )
+)
+
+fig.add_trace(
+    go.Bar(
+        name='Workout Frequency (days/week)',
+        x=gender_avg.index,
+        y=gender_avg['Workout_Frequency (days/week)']
+    )
+)
+
+fig.add_trace(
+    go.Bar(
+        name='Water Intake (liters)',
+        x=gender_avg.index,
+        y=gender_avg['Water_Intake (liters)']
+    )
+)
+
+fig.update_layout(
+    title='Average Fitness Characteristics by Gender',
+    xaxis_title='Gender',
+    yaxis_title='Average Value',
+    barmode='group',
+    height=600,
+    legend_title='Variables'
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+# Display average values table
+st.subheader("📋 Average Values Table")
+st.dataframe(gender_avg.round(2))
 
