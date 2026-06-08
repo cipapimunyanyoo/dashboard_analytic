@@ -17,222 +17,25 @@ df = pd.read_csv("gym_members_exercise_tracking.csv")
 st.subheader("Raw Data")
 st.write(df)
 
-# Average Calories Burned vs Session Duration
-st.subheader("Bar Chart")
-
-# Added key="bar_col" to prevent duplicate widget errors!
-column = st.selectbox("Choose a column for the bar chart", df.columns, key="bar_col")
-
-fig, ax = plt.subplots(figsize=(10, 6))
-
-# Count occurrences and plot as bar chart
-df[column].value_counts().plot(kind='bar', ax=ax)
-
-ax.set_xlabel(column)
-ax.set_ylabel("Count")
-ax.set_title(f"Bar Chart of {column}")
-
+#histogram
+st.subheader("Histogram")
+column = st.selectbox("Choose a column", df.columns)
+fig, ax = plt.subplots(figsize = (10,6))
+df[column].plot(kind = 'hist', ax =ax)
 st.pyplot(fig)
+fig = px.histogram(df, x=column)
+fig.update_traces( marker = {"color": "purple", "line":{"color": "black", "width":2}})
+st.plotly_chart(fig)
 
-
-
-
-# Session Duration(hours) vs Calories Burned
+#Scatter chart
 st.subheader("Scatter Chart")
-# Added unique keys to these selectboxes too!
-x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
-y_column = st.selectbox("Choose y-axis column", df.columns, key="scatter_y")
-
+x_column = st.selectbox("Choose x-axis column", df.columns)
+y_column = st.selectbox("Choose y-axis column", df.columns)
 fig, ax = plt.subplots(figsize = (10,6))
 df.plot(kind = 'scatter', x=x_column, y=y_column, ax =ax)
 st.pyplot(fig)
 
-# ✅ FIXED: Changed color='sex' to color='Gender' to match your gym data columns!
-fig = px.scatter(df, x=x_column, y=y_column, color='Gender', color_discrete_sequence=['yellow', 'red'])
+fig = px.scatter(df, x=x_column, y = y_column,color ='sex' , color_discrete_sequence= ['yellow', 'red'])
 st.plotly_chart(fig)
 
-# 1️⃣ Plot 1: Workout Duration vs Calories Burned Analysis
-st.subheader("Workout Duration vs. Calories Burned")
-st.markdown("Analyze whether longer exercise sessions result in a higher calorie expenditure.")
-
-# Interactive option to see how different factors influence this relationship
-color_option = st.selectbox(
-    "Color points by:", 
-    ['Workout_Type', 'Gender', 'Experience_Level'], 
-    key="duration_color"
-)
-
-fig_duration = px.scatter(
-    df, 
-    x='Session_Duration (hours)', 
-    y='Calories_Burned', 
-    color=color_option,
-    hover_data=['Age', 'BMI'],
-    title="Relationship Between Workout Duration and Calories Burned ",
-    labels={'Session_Duration (hours)': 'Workout Duration (Hours)', 'Calories_Burned': 'Calories Burned (kcal)'},
-    opacity=0.8
-)
-st.plotly_chart(fig_duration)
-
-
-# 2️⃣ Plot 2: Gender Fitness Characteristics Comparison
-st.subheader("Gender Fitness Characteristics Comparison")
-st.markdown("Compare key exercise and fitness features across different genders.")
-
-# Restricting options to the variables you specified
-fitness_vars = ['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)']
-
-x_fitness = st.selectbox("Select X-axis Variable:", fitness_vars, index=0, key="fitness_x")
-y_fitness = st.selectbox("Select Y-axis Variable:", fitness_vars, index=1, key="fitness_y")
-
-fig_gender = px.scatter(
-    df,
-    x=x_fitness,
-    y=y_fitness,
-    color='Gender',
-    symbol='Gender', # Uses different shapes for Male and Female points
-    title=f"Comparing {x_fitness} vs {y_fitness} by Gender ",
-    hover_data=['Age', 'Workout_Type'],
-    color_discrete_sequence=px.colors.qualitative.Set2,
-    opacity=0.8
-)
-st.plotly_chart(fig_gender)
-
-# Scatter chart
-st.subheader("Scatter Chart")
-# Added unique keys to these selectboxes too!
-x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
-y_column = st.selectbox("Choose y-axis column", df.columns, key="scatter_y")
-
-fig, ax = plt.subplots(figsize = (10,6))
-df.plot(kind = 'scatter', x=x_column, y=y_column, ax =ax)
-st.pyplot(fig)
-
-# ✅ FIXED: Changed color='sex' to color='Gender' to match your gym data columns!
-fig = px.scatter(df, x=x_column, y=y_column, color='Gender', color_discrete_sequence=['yellow', 'red'])
-st.plotly_chart(fig)
-
-# 1️⃣ Plot 1: Workout Duration vs Calories Burned Analysis
-st.subheader("Workout Duration vs. Calories Burned")
-st.markdown("Analyze whether longer exercise sessions result in a higher calorie expenditure.")
-
-# Interactive option to see how different factors influence this relationship
-color_option = st.selectbox(
-    "Color points by:", 
-    ['Workout_Type', 'Gender', 'Experience_Level'], 
-    key="duration_color"
-)
-
-fig_duration = px.scatter(
-    df, 
-    x='Session_Duration (hours)', 
-    y='Calories_Burned', 
-    color=color_option,
-    hover_data=['Age', 'BMI'],
-    title="Relationship Between Workout Duration and Calories Burned ",
-    labels={'Session_Duration (hours)': 'Workout Duration (Hours)', 'Calories_Burned': 'Calories Burned (kcal)'},
-    opacity=0.8
-)
-st.plotly_chart(fig_duration)
-
-
-# 2️⃣ Plot 2: Gender Fitness Characteristics Comparison
-st.subheader("Gender Fitness Characteristics Comparison")
-st.markdown("Compare key exercise and fitness features across different genders.")
-
-# Restricting options to the variables you specified
-fitness_vars = ['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)']
-
-x_fitness = st.selectbox("Select X-axis Variable:", fitness_vars, index=0, key="fitness_x")
-y_fitness = st.selectbox("Select Y-axis Variable:", fitness_vars, index=1, key="fitness_y")
-
-fig_gender = px.scatter(
-    df,
-    x=x_fitness,
-    y=y_fitness,
-    color='Gender',
-    symbol='Gender', # Uses different shapes for Male and Female points
-    title=f"Comparing {x_fitness} vs {y_fitness} by Gender ",
-    hover_data=['Age', 'Workout_Type'],
-    color_discrete_sequence=px.colors.qualitative.Set2,
-    opacity=0.8
-)
-st.plotly_chart(fig_gender)
-# Scatter chart
-st.subheader("Scatter Chart")
-# Added unique keys to these selectboxes too!
-x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
-y_column = st.selectbox("Choose y-axis column", df.columns, key="scatter_y")
-
-fig, ax = plt.subplots(figsize = (10,6))
-df.plot(kind = 'scatter', x=x_column, y=y_column, ax =ax)
-st.pyplot(fig)
-
-# ✅ FIXED: Changed color='sex' to color='Gender' to match your gym data columns!
-fig = px.scatter(df, x=x_column, y=y_column, color='Gender', color_discrete_sequence=['yellow', 'red'])
-st.plotly_chart(fig)
-
-# 1️⃣ Plot 1: Workout Duration vs Calories Burned Analysis
-st.subheader("Workout Duration vs. Calories Burned")
-st.markdown("Analyze whether longer exercise sessions result in a higher calorie expenditure.")
-
-# Interactive option to see how different factors influence this relationship
-color_option = st.selectbox(
-    "Color points by:", 
-    ['Workout_Type', 'Gender', 'Experience_Level'], 
-    key="duration_color"
-)
-
-fig_duration = px.scatter(
-    df, 
-    x='Session_Duration (hours)', 
-    y='Calories_Burned', 
-    color=color_option,
-    hover_data=['Age', 'BMI'],
-    title="Relationship Between Workout Duration and Calories Burned ",
-    labels={'Session_Duration (hours)': 'Workout Duration (Hours)', 'Calories_Burned': 'Calories Burned (kcal)'},
-    opacity=0.8
-)
-st.plotly_chart(fig_duration)
-
-
-# 2️⃣ Plot 2: Gender Fitness Characteristics Comparison
-st.subheader("Gender Fitness Characteristics Comparison")
-st.markdown("Compare key exercise and fitness features across different genders.")
-
-# Restricting options to the variables you specified
-fitness_vars = ['Fat_Percentage', 'Workout_Frequency (days/week)', 'Water_Intake (liters)']
-
-x_fitness = st.selectbox("Select X-axis Variable:", fitness_vars, index=0, key="fitness_x")
-y_fitness = st.selectbox("Select Y-axis Variable:", fitness_vars, index=1, key="fitness_y")
-
-fig_gender = px.scatter(
-    df,
-    x=x_fitness,
-    y=y_fitness,
-    color='Gender',
-    symbol='Gender', # Uses different shapes for Male and Female points
-    title=f"Comparing {x_fitness} vs {y_fitness} by Gender ",
-    hover_data=['Age', 'Workout_Type'],
-    color_discrete_sequence=px.colors.qualitative.Set2,
-    opacity=0.8
-)
-st.plotly_chart(fig_gender)
-
-# =========================
-# 2. Bar Chart
-# Session Duration vs Calories Burned
-# =========================
-st.subheader("2. Average Calories Burned by Session Duration")
-
-bar_data = df.groupby("Session_Duration (hours)")["Calories_Burned"].mean().reset_index()
-
-fig2 = px.bar(
-    bar_data,
-    x="Session_Duration (hours)",
-    y="Calories_Burned",
-    title="Average Calories Burned by Session Duration"
-)
-
-st.plotly_chart(fig2, use_container_width=True)
 
