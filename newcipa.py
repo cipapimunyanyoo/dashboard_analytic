@@ -32,7 +32,7 @@ fig = px.histogram(df, x=column, title=f"Distribution of {column}")
 fig.update_traces(marker={"color": "purple", "line":{"color": "black", "width":2}})
 st.plotly_chart(fig)
 
-# 🎯 General Scatter Chart Section
+#  General Scatter Chart Section
 st.subheader("General Scatter Chart")
 # Added unique keys to these selectboxes too!
 x_column = st.selectbox("Choose x-axis column", df.columns, key="scatter_x")
@@ -46,16 +46,16 @@ df.plot(kind='scatter', x=x_column, y=y_column, ax=ax)
 st.pyplot(fig)
 
 # Plotly Scatter
-# ✅ FIXED: Changed color='sex' to color='Gender' to match your gym data columns!
+#  FIXED: Changed color='sex' to color='Gender' to match your gym data columns!
 fig = px.scatter(df, x=x_column, y=y_column, color='Gender', color_discrete_sequence=['yellow', 'red'], title=f"{x_column} vs {y_column}")
 st.plotly_chart(fig)
 
 
 # ==========================================
-# 🚀 INTERACTIVE SCATTER PLOTS ADDED BELOW
+# INTERACTIVE SCATTER PLOTS ADDED BELOW
 # ==========================================
 
-# 1️⃣ Plot 1: Workout Duration vs Calories Burned Analysis
+#  Plot 1: Workout Duration vs Calories Burned Analysis
 st.subheader(" Workout Duration vs. Calories Burned")
 st.markdown("Analyze whether longer exercise sessions result in a higher calorie expenditure.")
 
@@ -79,7 +79,7 @@ fig_duration = px.scatter(
 st.plotly_chart(fig_duration)
 
 
-# 2️⃣ Plot 2: Gender Fitness Characteristics Comparison
+# 2️ Plot 2: Gender Fitness Characteristics Comparison
 st.subheader("Gender Fitness Characteristics Comparison")
 st.markdown("Compare key exercise and fitness features across different genders.")
 
@@ -105,7 +105,7 @@ st.plotly_chart(fig_gender)
 
 
 # ==========================================
-# 📊 NEW: INTERACTIVE GROUPED BAR CHART 
+#  NEW: INTERACTIVE GROUPED BAR CHART 
 # ==========================================
 st.subheader("📊 Average Fitness Characteristics by Gender")
 st.markdown("This bar chart displays the aggregated average values grouped by gender.")
