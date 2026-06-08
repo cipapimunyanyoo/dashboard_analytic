@@ -38,4 +38,25 @@ st.pyplot(fig)
 fig = px.scatter(df, x=x_column, y = y_column,color ='sex' , color_discrete_sequence= ['yellow', 'red'])
 st.plotly_chart(fig)
 
+#bar chart
+import pandas as pd
+import matplotlib.pyplot as plt
 
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Calculate means by gender
+gender_means = df.groupby('Gender')[
+    ['Fat Percentage',
+     'Workout Frequency (days/week)',
+     'Water Intake (liters)']
+].mean()
+
+# Plot
+gender_means.plot(kind='bar', figsize=(10,6))
+
+plt.title('Average Fitness Characteristics by Gender')
+plt.ylabel('Average Value')
+plt.xticks(rotation=0)
+plt.legend(title='Variables')
+plt.show()
