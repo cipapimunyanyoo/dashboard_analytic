@@ -29,7 +29,7 @@ st.pyplot(fig)
 
 # Plotly Histogram
 fig = px.histogram(df, x=column, title=f"Distribution of {column}")
-fig.update_traces(marker={"color": "purple", "line":{"color": "black", "width":2}})
+fig.update_traces(marker={"color": "pink", "line":{"color": "black", "width":2}})
 st.plotly_chart(fig)
 
 #  General Scatter Chart Section
@@ -72,7 +72,7 @@ fig_duration = px.scatter(
     y='Calories_Burned', 
     color=color_option,
     hover_data=['Age', 'BMI'],
-    title="Relationship Between Workout Duration and Calories Burned 💸",
+    title="Relationship Between Workout Duration and Calories Burned ",
     labels={'Session_Duration (hours)': 'Workout Duration (Hours)', 'Calories_Burned': 'Calories Burned (kcal)'},
     opacity=0.8
 )
