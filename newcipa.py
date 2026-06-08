@@ -107,7 +107,7 @@ st.plotly_chart(fig_gender)
 # ==========================================
 #  NEW: INTERACTIVE GROUPED BAR CHART 
 # ==========================================
-st.subheader("📊 Average Fitness Characteristics by Gender")
+st.subheader("Average Fitness Characteristics by Gender")
 st.markdown("This bar chart displays the aggregated average values grouped by gender.")
 
 # 1. Calculate the mean values grouped by Gender
